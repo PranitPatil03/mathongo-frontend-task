@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import "./App.css";
 import VideoPlayer from "./components/VideoPlayer";
 import useNotes from "./hooks/useNotes";
-import NoteForm from "./components/NoteForm";
 import { formattedDate } from "./util/Date";
 import { formatTimestamp } from "./util/timestamp";
 import NotesList from "./components/NoteList";
+import { CirclePlus } from "lucide-react";
+import Modal from "./components/Modal";
 
 function App() {
   const defaultVideoID = "zdGfo6I1yrA";
@@ -17,7 +18,7 @@ function App() {
     setVideoID(e.target.value);
   };
 
-  const { notes,saveNote ,deleteNote,editNote,setShowModal} = useNotes(videoID);
+  const { notes, saveNote, deleteNote, editNote } = useNotes(videoID);
 
   const handleSaveNote = (content) => {
     const timestamp = playerRef.current.getCurrentTime();
@@ -33,6 +34,8 @@ function App() {
     };
     saveNote(newNote);
   };
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen py-10 px-4 sm:px-10">
@@ -50,7 +53,7 @@ function App() {
           />
         </div>
 
-        <div className="flex flex-col justify-center items-center w-full max-w-7xl mb-8">
+        <div className="flex flex-col justify-center items-center w-full mb-8">
           <VideoPlayer
             videoId={videoID}
             onReady={(e) => (playerRef.current = e.target)}
@@ -67,7 +70,40 @@ function App() {
         </div>
       </div>
       <div className="px-auto">
-        <NoteForm onSave={handleSaveNote} videoID={videoID} />
+        <div className="flex flex-col border border-[#e7e7e7] p-5 rounded-xl shadow-md mx-auto">
+          <div className="gap-4 md:gap-0 flex flex-row justify-between items-center">
+            <div>
+              <h3 className="font-serif text-xl font-semibold">My notes</h3>
+              <p className="font-serif text-sm font-thin">
+                All your notes at a single place. Click on any note to go to
+                specific timestamp in the video.
+              </p>
+            </div>
+            <div className="flex flex-row border border-[#e7e7e7] p-2 gap-2 rounded-md justify-between items-center ">
+              <CirclePlus className="w-4 h-4" />
+              <button
+                onClick={() => setShowModal(true)}
+                className="w-full font-medium rounded-lg text-sm "
+                type="button"
+              >
+                Add new note
+              </button>
+              <Modal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                onSave={handleSaveNote}
+              />
+            </div>
+          </div>
+          <hr className="my-5 border border-[#f6f3f3] w-full" />
+
+          <NotesList
+            notes={notes}
+            onDelete={deleteNote}
+            onEdit={editNote}
+            setShowModal={setShowModal}
+          />
+        </div>
       </div>
     </div>
   );
