@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import YouTube from "react-youtube";
 
-const VideoPlayer = ({ videoId, onReady }) => {
+const VideoPlayer = ({ videoId, onReady}) => {
   const opts = {
     playerVars: {
       autoplay: 1,

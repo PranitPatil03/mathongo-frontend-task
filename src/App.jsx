@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import "./App.css";
-import Notes from "./components/Notes";
 import VideoPlayer from "./components/VideoPlayer";
+import useNotes from "./hooks/useNotes";
+import NoteForm from "./components/NoteForm";
+import { formattedDate } from "./util/Date";
+import { formatTimestamp } from "./util/timestamp";
+import NotesList from "./components/NoteList";
 
 function App() {
   const defaultVideoID = "zdGfo6I1yrA";
@@ -13,10 +17,27 @@ function App() {
     setVideoID(e.target.value);
   };
 
+  const { notes,saveNote ,deleteNote,editNote,setShowModal} = useNotes(videoID);
+
+  const handleSaveNote = (content) => {
+    const timestamp = playerRef.current.getCurrentTime();
+    const formattedTimestamp = formatTimestamp(timestamp);
+
+    console.log(formattedTimestamp);
+
+    const newNote = {
+      id: Date.now(),
+      timestamp: formattedTimestamp,
+      date: formattedDate,
+      content,
+    };
+    saveNote(newNote);
+  };
+
   return (
     <div className="flex flex-col min-h-screen py-10 px-4 sm:px-10">
       <div className="flex flex-col w-full justify-center items-center">
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-8 px-48">
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-8 px-auto">
           <p className="text-3xl font-serif font-semibold mb-4 sm:mb-0">
             Video Player with Notes
           </p>
@@ -42,10 +63,12 @@ function App() {
               This is the description of the video
             </p>
           </div>
-          <hr className="mt-3 border border-[#e7e7e7] w-full"/>
-        </div>  
+          <hr className="mt-3 border border-[#e7e7e7] w-full" />
+        </div>
       </div>
-      <Notes />
+      <div className="px-auto">
+        <NoteForm onSave={handleSaveNote} videoID={videoID} />
+      </div>
     </div>
   );
 }
