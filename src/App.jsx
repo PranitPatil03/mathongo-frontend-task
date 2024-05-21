@@ -3,7 +3,7 @@ import "./App.css";
 import VideoPlayer from "./components/VideoPlayer";
 import useNotes from "./hooks/useNotes";
 import { formattedDate } from "./util/Date";
-import { formatTimestamp } from "./util/timestamp";
+import { formatTimestamp, parseTimestampToSeconds } from "./util/timestamp";
 import NotesList from "./components/NoteList";
 import { CirclePlus } from "lucide-react";
 import Modal from "./components/Modal";
@@ -13,6 +13,7 @@ function App() {
 
   const [videoID, setVideoID] = useState(defaultVideoID);
   const playerRef = useRef(null);
+  console.log(playerRef);
 
   const handleVideoIDChange = (e) => {
     setVideoID(e.target.value);
@@ -37,6 +38,11 @@ function App() {
 
   const [showModal, setShowModal] = useState(false);
 
+  const handleTimestampClick = (timestamp) => {
+    const seconds = parseTimestampToSeconds(timestamp);
+    playerRef.current.seekTo(seconds);
+  };
+
   return (
     <div className="mx-0 flex flex-col min-h-screen py-10 px-4 sm:px-10 md:mx-52">
       <div className="flex flex-col w-full justify-center items-center mx-auto px-auto">
@@ -55,6 +61,7 @@ function App() {
 
         <div className="flex flex-col justify-center items-center w-full mb-8">
           <VideoPlayer
+            ref={playerRef}
             videoId={videoID}
             onReady={(e) => (playerRef.current = e.target)}
           />
@@ -102,6 +109,8 @@ function App() {
             onDelete={deleteNote}
             onEdit={editNote}
             setShowModal={setShowModal}
+            ref={playerRef}
+            handleTimestampClick={handleTimestampClick}
           />
         </div>
       </div>

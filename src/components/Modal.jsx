@@ -11,11 +11,11 @@ const Modal = ({ showModal, setShowModal, onSave }) => {
     setContent("");
   };
 
-  const handleCloseModal=(e)=>{
+  const handleCloseModal = (e) => {
     e.preventDefault();
     setShowModal(false);
     setContent("");
-  }
+  };
 
   return (
     <div

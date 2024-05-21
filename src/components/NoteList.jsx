@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
 import Note from "./Note";
 
-const NotesList = ({ notes, onDelete, onEdit, setShowModal,playerRef}) => (
+const NotesList = ({
+  notes,
+  onDelete,
+  onEdit,
+  setShowModal,
+  handleTimestampClick,
+}) => (
   <div>
     {notes.map((note) => (
       <Note
@@ -10,7 +16,7 @@ const NotesList = ({ notes, onDelete, onEdit, setShowModal,playerRef}) => (
         onDelete={onDelete}
         onEdit={onEdit}
         setShowModal={setShowModal}
-        playerRef={playerRef}
+        handleTimestampClick={handleTimestampClick}
       />
     ))}
   </div>

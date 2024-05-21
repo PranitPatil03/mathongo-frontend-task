@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import YouTube from "react-youtube";
 
-const VideoPlayer = ({ videoId, onReady}) => {
+const VideoPlayer = ({ videoId, onReady, ref }) => {
   const opts = {
     playerVars: {
       autoplay: 1,
@@ -15,6 +15,7 @@ const VideoPlayer = ({ videoId, onReady}) => {
         videoId={videoId}
         opts={opts}
         onReady={onReady}
+        ref={ref}
       />
     </div>
   );
