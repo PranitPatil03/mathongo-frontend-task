@@ -9,7 +9,7 @@ import { CirclePlus } from "lucide-react";
 import Modal from "./components/Modal";
 
 function App() {
-  const defaultVideoID = "zdGfo6I1yrA";
+  const defaultVideoID = "7XDeI5fyj3w";
 
   const [videoID, setVideoID] = useState(defaultVideoID);
   const playerRef = useRef(null);
@@ -38,10 +38,10 @@ function App() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen py-10 px-4 sm:px-10">
-      <div className="flex flex-col w-full justify-center items-center">
+    <div className="mx-0 flex flex-col min-h-screen py-10 px-4 sm:px-10 md:mx-52">
+      <div className="flex flex-col w-full justify-center items-center mx-auto px-auto">
         <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-8 px-auto">
-          <p className="text-3xl font-serif font-semibold mb-4 sm:mb-0">
+          <p className="text-xl md:text-3xl font-serif font-semibold mb-4 sm:mb-0">
             Video Player with Notes
           </p>
           <input
@@ -70,8 +70,8 @@ function App() {
         </div>
       </div>
       <div className="px-auto">
-        <div className="flex flex-col border border-[#e7e7e7] p-5 rounded-xl shadow-md mx-auto">
-          <div className="gap-4 md:gap-0 flex flex-row justify-between items-center">
+        <div className="flex flex-col border border-[#e7e7e7] p-5 rounded-xl shadow-md ">
+          <div className="gap-4 md:gap-0 flex flex-col md:flex-row justify-between items-center">
             <div>
               <h3 className="font-serif text-xl font-semibold">My notes</h3>
               <p className="font-serif text-sm font-thin">
@@ -79,7 +79,7 @@ function App() {
                 specific timestamp in the video.
               </p>
             </div>
-            <div className="flex flex-row border border-[#e7e7e7] p-2 gap-2 rounded-md justify-between items-center ">
+            <div className="flex flex-row border border-[#e7e7e7] p-2 gap-2 rounded-md justify-between items-center">
               <CirclePlus className="w-4 h-4" />
               <button
                 onClick={() => setShowModal(true)}
